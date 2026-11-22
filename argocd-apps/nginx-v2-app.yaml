@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+
+metadata:
+  name: nginx-gitops-v2
+  namespace: argocd
+
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/jimmyjijith/argocd-gitops-lab.git
+    targetRevision: main
+    path: apps/nginx-v2
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: gitops-demo-v2
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

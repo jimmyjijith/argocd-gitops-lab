@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+
+metadata:
+  name: argocd-apps-parent
+  namespace: argocd
+
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/jimmyjijith/argocd-gitops-lab.git
+    targetRevision: main
+    path: argocd-apps
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+
+  syncPolicy:
+    automated:
+      selfHeal: true
